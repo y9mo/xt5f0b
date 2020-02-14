@@ -84,9 +84,6 @@ echo '127.0.0.1 localhost
 # Initramfs
 #
 
-echo "Before mkinitcpio change"
-cat /mnt/etc/mkinitcpio.conf
-
 #
 # Default
 # HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)
@@ -102,9 +99,6 @@ NEW_HOOKS=$(
 # Replace old HOOKS
 sed --in-place 's/^\(HOOKS=(\)[^)]\+/\1'"$NEW_HOOKS"'/' /mnt/etc/mkinitcpio.conf
 
-echo "After mkinitcpio change"
-cat /mnt/etc/mkinitcpio.conf
-
 # Regenerate initrd image
 arch-chroot /mnt mkinitcpio -p linux
 
@@ -114,8 +108,6 @@ bootctl --path=/boot install
 EOF
 
 echo default arch\ntimeout 5 >> /mnt/boot/loader/loader.conf
-cat -e /mnt/boot/loader/loader.conf
-
 
 CRYPTDEVICE_UUID=$(blkid | grep $ENCPARTITION | cut -d '"' -f 2)
 
@@ -125,9 +117,16 @@ initrd /intel-ucode.img
 initrd /initramfs-linux.img
 options cryptdevice=UUID='"$CRYPTDEVICE_UUID"':vg0 root=/dev/mapper/vg0-root resume=/dev/mapper/vg0-swap rw intel_pstate=no_hwp' >> /mnt/boot/loader/entries/arch.conf
 
-cat -e /mnt/boot/loader/entries/arch.conf
-
 
 arch-chroot /mnt /bin/bash <<EOF
 systemctl enable NetworkManager
 EOF
+
+
+#
+# THE END
+#
+
+# Unmount all partitions
+umount -R /mnt
+swapoff -a
