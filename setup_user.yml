@@ -1,0 +1,45 @@
+---
+- hosts: localhost
+  name: Configure xps workstation
+  become: yes
+
+  tasks:
+   - name: Make sure we have a 'wheel' group
+     group:
+      name: wheel
+      state: present
+
+   - name: Install sudo
+     pacman:
+       name: sudo
+       state: present
+
+   - name: Install zsh
+     pacman:
+       name: zsh
+       state: present
+
+   - name: Enable wheel group as sudoers
+     lineinfile:
+       dest: /etc/sudoers
+       state: present
+       regexp: '^%wheel'
+       line: '%wheel ALL=(ALL) ALL'
+       validate: 'visudo -cf %s'
+
+   - name: Create y9mo user
+     user:
+      name: "{{ user.name }}"
+      password: '$6$l5arRlpsqjrMf$5RVJYtvhga9O75kTFgioLCPVGBFyQX54Yg.V9R.MtCIAg51.rlS7h6v2dK/PRYgQZkaWA/dwq7IrqGnT6Q2jA1'
+      groups: wheel
+      state: present
+      shell: "{{ user.shell }}"
+
+   - name: Create file to disable lecture
+     file:
+       path: "/var/db/sudo/lectured/y9mo"
+       state: touch
+       mode: u=rw,g=,o=
+       group: y9mo
+       modification_time: preserve
+       access_time: preserve
