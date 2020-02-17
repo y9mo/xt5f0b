@@ -7,6 +7,7 @@
     - fstrim
     - golang
     - graphical
+    - hashicorp
     - lightdm
     - networkmanager
     - rust
