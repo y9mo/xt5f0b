@@ -1,0 +1,13 @@
+---
+- name: Install docker
+  become: true
+  pacman:
+    name: docker
+    state: present
+
+- name: Enable and start docker service
+  become: true
+  systemd:
+    name: docker.service
+    enabled: True
+    state: started

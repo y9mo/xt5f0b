@@ -1,0 +1,4 @@
+---
+- name: Enable fstrim
+  become: true
+  service: name=fstrim.timer enabled=yes state=started

@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  name: Configure xps workstation
+
+  roles:
+    - docker
+    - fstrim
+    - golang
+    - yay
