@@ -1,0 +1,23 @@
+---
+- name: Install NetworkManager and dependencies
+  become: true
+  pacman:
+    name:
+      - networkmanager
+      - networkmanager-openconnect
+      - gnome-keyring
+    state: present
+
+- name: Enable and start NetworkManager
+  become: true
+  service:
+      name: NetworkManager.service
+      enabled: yes
+      state: started
+
+- name: Disable dhcpcd service
+  become: true
+  service:
+      name: dhcpcd.service
+      enabled: no
+  ignore_errors: yes

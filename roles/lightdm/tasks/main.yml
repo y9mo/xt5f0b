@@ -1,0 +1,12 @@
+---
+- name: Install LightDM
+  become: true
+  pacman:
+    name:
+      - lightdm
+      - lightdm-gtk-greeter
+    state: present
+
+- name: Enable LightDM
+  become: true
+  service: name=lightdm.service enabled=yes
