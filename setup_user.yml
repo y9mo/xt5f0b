@@ -31,7 +31,7 @@
      user:
       name: "{{ user.name }}"
       password: '$6$l5arRlpsqjrMf$5RVJYtvhga9O75kTFgioLCPVGBFyQX54Yg.V9R.MtCIAg51.rlS7h6v2dK/PRYgQZkaWA/dwq7IrqGnT6Q2jA1'
-      groups: wheel
+      groups: wheel,video
       state: present
       shell: "{{ user.shell }}"
 
