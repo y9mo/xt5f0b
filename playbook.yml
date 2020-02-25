@@ -3,6 +3,7 @@
   name: Configure xps workstation
 
   roles:
+    - base
     - docker
     - fstrim
     - golang

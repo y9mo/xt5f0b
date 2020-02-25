@@ -4,3 +4,9 @@
   pacman:
     name: terraform
     state: present
+
+- name: Install packer
+  become: true
+  pacman:
+    name: packer
+    state: present

@@ -1,0 +1,16 @@
+---
+- name: Install universal base packages
+  become: true
+  pacman:
+    name:
+      - aws-cli
+      - bc
+      - evince
+      - git
+      - htop
+      - jq
+      - man-db
+      - man-pages
+      - ranger
+      - ruby
+    state: present

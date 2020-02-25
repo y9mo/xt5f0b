@@ -11,5 +11,4 @@
     become: true
     pacman:
       name:
-      - xf86-video-intel
       - xf86-input-libinput
