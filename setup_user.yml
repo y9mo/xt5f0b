@@ -2,6 +2,10 @@
 - hosts: localhost
   name: Configure xps workstation
   become: yes
+  vars:
+    user:
+      name: y9mo
+      shell: /usr/bin/zsh
 
   tasks:
    - name: Make sure we have a 'wheel' group
@@ -40,7 +44,7 @@
        path: "/var/db/sudo/lectured/y9mo"
        state: touch
        mode: u=rw,g=,o=
-       group: y9mo
+       group: "{{ user.name }}"
        modification_time: preserve
        access_time: preserve
 
@@ -48,3 +52,11 @@
      git:
        repo: https://github.com/y9mo/xt5f0b.git
        dest: "/home/{{ user.name }}/xt5f0b"
+
+   - name: Recursively change ownership of ansible repo
+     file:
+       path: "/home/{{ user.name }}/xt5f0b"
+       state: directory
+       recurse: yes
+       owner: "{{ user.name }}"
+       group: "{{ user.name }}"
