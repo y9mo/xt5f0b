@@ -7,6 +7,8 @@ DRIVE=/dev/nvme0n1
 EFIPARTITION=/dev/nvme0n1p1
 ENCPARTITION=/dev/nvme0n1p2
 
+USER_SETUP_URL=https://raw.githubusercontent.com/y9mo/xt5f0b/master/setup_user.yml
+
 sgdisk --zap-all $DRIVE
 
 sgdisk --clear \
@@ -45,7 +47,7 @@ mount $EFIPARTITION /mnt/boot
 
 
 # Install essential packages and then some
-pacstrap /mnt base base-devel linux linux-firmware neovim git openssh sudo efibootmgr intel-ucode lvm2 networkmanager
+pacstrap /mnt base base-devel linux linux-firmware neovim git openssh sudo efibootmgr intel-ucode lvm2 networkmanager ansible
 
 #
 # Configure the system
@@ -122,6 +124,11 @@ arch-chroot /mnt /bin/bash <<EOF
 systemctl enable NetworkManager
 EOF
 
+
+arch-chroot /mnt /bin/bash <<EOF
+curl -LJO $USER_SETUP_URL
+ansible-playbook setup_user.yml
+EOF
 
 #
 # THE END

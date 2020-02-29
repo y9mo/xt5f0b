@@ -12,3 +12,4 @@
     pacman:
       name:
       - xf86-input-libinput
+      - xorg-xinput

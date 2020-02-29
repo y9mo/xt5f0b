@@ -43,3 +43,8 @@
        group: y9mo
        modification_time: preserve
        access_time: preserve
+
+   - name: Download ansible repo from github
+     git:
+       repo: https://github.com/y9mo/xt5f0b.git
+       dest: "/home/{{ user.name }}/xt5f0b"
