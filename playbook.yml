@@ -5,6 +5,7 @@
   roles:
     - base
     - docker
+    - fonts
     - fstrim
     - golang
     - graphical

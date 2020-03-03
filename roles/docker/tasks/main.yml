@@ -11,3 +11,16 @@
     name: docker.service
     enabled: True
     state: started
+
+- name: Make sure we have a 'docker' group
+  become: true
+  group:
+    name: docker
+    state: present
+
+- name: Add user '{{ user.name }}' to 'docker' group
+  become: true
+  user:
+    name: '{{ user.name }}'
+    groups: docker
+    append: 'yes'

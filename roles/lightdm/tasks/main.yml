@@ -10,3 +10,10 @@
 - name: Enable LightDM
   become: true
   service: name=lightdm.service enabled=yes
+
+- name: Set up greeter
+  lineinfile:
+    dest: /etc/lightdm/lightdm.conf
+    state: present
+    regexp: '^#greeter-session='
+    line: 'greeter-session=lightdm-gtk-greeter'

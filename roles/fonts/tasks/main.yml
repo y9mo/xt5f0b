@@ -1,0 +1,15 @@
+---
+- name: Install fonts
+  become: true
+  pacman:
+    name:
+      - noto-fonts
+      - terminus-font
+      - ttf-dejavu
+      - ttf-droid
+      - ttf-font-awesome
+      - ttf-freefont
+      - ttf-inconsolata
+      - ttf-liberation
+      - ttf-roboto
+      - ttf-ubuntu-font-family
