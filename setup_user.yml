@@ -6,6 +6,7 @@
     user:
       name: y9mo
       shell: /usr/bin/zsh
+      dotfiles: https://github.com/y9mo/everydot.git
 
   tasks:
    - name: Make sure we have a 'wheel' group
@@ -39,7 +40,7 @@
       state: present
       shell: "{{ user.shell }}"
 
-   - name: Create file to disable lecture
+   - name: Create file to disable sudo lecture
      file:
        path: "/var/db/sudo/lectured/y9mo"
        state: touch
@@ -60,3 +61,41 @@
        recurse: yes
        owner: "{{ user.name }}"
        group: "{{ user.name }}"
+
+   - name: clone oh-my-zsh for user '{{ user.name }}'
+     git:
+       repo: https://github.com/robbyrussell/oh-my-zsh.git
+       dest: "/home/{{ user.name }}/.oh-my-zsh"
+
+   - name: Create user '{{ user.name }}' config directory if it does not exist
+     file:
+       path: "/home/{{ user.name }}/.config"
+       state: directory
+       mode: '0755'
+
+   - name: Clone user '{{ user.name }}' dotfiles from github
+     git:
+       repo: "{{ user.dotfiles }}"
+       dest: "/home/{{ user.name }}/.config"
+
+   # Install vim-plug
+   - name: Create '{{ user.name }}' nvim autoload in config directory if it does not exist
+     file:
+       path: "/home/{{ user.name }}/.config/nvim/autoload"
+       state: directory
+       mode: '0755'
+
+   - name: Create '{{ user.name }}' nvim plugged in config directory if it does not exist
+     file:
+       path: "/home/{{ user.name }}/.config/nvim/plugged"
+       state: directory
+       mode: '0755'
+
+   - name: Install vim-plug
+     get_url:
+       url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+       dest: "/home/{{ user.name }}/.config/nvim/autoload/plug.vim"
+       force: yes
+
+   - name: Install vim plugins
+     command: nvim "+silent! PlugInstall!" +qall!
