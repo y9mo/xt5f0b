@@ -6,96 +6,57 @@
     user:
       name: y9mo
       shell: /usr/bin/zsh
-      dotfiles: https://github.com/y9mo/everydot.git
 
   tasks:
-   - name: Make sure we have a 'wheel' group
-     group:
-      name: wheel
-      state: present
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
 
-   - name: Install sudo
-     pacman:
-       name: sudo
-       state: present
+    - name: Enable wheel group as sudoers
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) ALL'
+        validate: 'visudo -cf %s'
 
-   - name: Install zsh
-     pacman:
-       name: zsh
-       state: present
+    - name: Create {{ user.name }} user
+      user:
+        name: "{{ user.name }}"
+        password: '$6$l5arRlpsqjrMf$5RVJYtvhga9O75kTFgioLCPVGBFyQX54Yg.V9R.MtCIAg51.rlS7h6v2dK/PRYgQZkaWA/dwq7IrqGnT6Q2jA1'
+        groups: wheel,video
+        state: present
+        shell: "{{ user.shell }}"
 
-   - name: Enable wheel group as sudoers
-     lineinfile:
-       dest: /etc/sudoers
-       state: present
-       regexp: '^%wheel'
-       line: '%wheel ALL=(ALL) ALL'
-       validate: 'visudo -cf %s'
+    - name: Create file to disable sudo lecture
+      file:
+        path: "/var/db/sudo/lectured/{{ user.name }}"
+        state: touch
+        mode: u=rw,g=,o=
+        group: "{{ user.name }}"
+        modification_time: preserve
+        access_time: preserve
 
-   - name: Create y9mo user
-     user:
-      name: "{{ user.name }}"
-      password: '$6$l5arRlpsqjrMf$5RVJYtvhga9O75kTFgioLCPVGBFyQX54Yg.V9R.MtCIAg51.rlS7h6v2dK/PRYgQZkaWA/dwq7IrqGnT6Q2jA1'
-      groups: wheel,video
-      state: present
-      shell: "{{ user.shell }}"
+    - name: Download ansible repo from github
+      git:
+        repo: https://github.com/y9mo/xt5f0b.git
+        dest: "/home/{{ user.name }}/.xt5f0b"
 
-   - name: Create file to disable sudo lecture
-     file:
-       path: "/var/db/sudo/lectured/y9mo"
-       state: touch
-       mode: u=rw,g=,o=
-       group: "{{ user.name }}"
-       modification_time: preserve
-       access_time: preserve
+    - name: Create empty .zshrc
+      file:
+        path: "/home/{{ user.name }}/.zshrc"
+        state: touch
+        mode: u=rw,g=r,o=r
+        modification_time: preserve
+        access_time: preserve
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
 
-   - name: Download ansible repo from github
-     git:
-       repo: https://github.com/y9mo/xt5f0b.git
-       dest: "/home/{{ user.name }}/xt5f0b"
-
-   - name: Recursively change ownership of ansible repo
-     file:
-       path: "/home/{{ user.name }}/xt5f0b"
-       state: directory
-       recurse: yes
-       owner: "{{ user.name }}"
-       group: "{{ user.name }}"
-
-   - name: clone oh-my-zsh for user '{{ user.name }}'
-     git:
-       repo: https://github.com/robbyrussell/oh-my-zsh.git
-       dest: "/home/{{ user.name }}/.oh-my-zsh"
-
-   - name: Create user '{{ user.name }}' config directory if it does not exist
-     file:
-       path: "/home/{{ user.name }}/.config"
-       state: directory
-       mode: '0755'
-
-   - name: Clone user '{{ user.name }}' dotfiles from github
-     git:
-       repo: "{{ user.dotfiles }}"
-       dest: "/home/{{ user.name }}/.config"
-
-   # Install vim-plug
-   - name: Create '{{ user.name }}' nvim autoload in config directory if it does not exist
-     file:
-       path: "/home/{{ user.name }}/.config/nvim/autoload"
-       state: directory
-       mode: '0755'
-
-   - name: Create '{{ user.name }}' nvim plugged in config directory if it does not exist
-     file:
-       path: "/home/{{ user.name }}/.config/nvim/plugged"
-       state: directory
-       mode: '0755'
-
-   - name: Install vim-plug
-     get_url:
-       url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-       dest: "/home/{{ user.name }}/.config/nvim/autoload/plug.vim"
-       force: yes
-
-   - name: Install vim plugins
-     command: nvim "+silent! PlugInstall!" +qall!
+    - name: Recursively change ownership of ansible repo
+      file:
+        path: "/home/{{ user.name }}/.xt5f0b"
+        state: directory
+        recurse: yes
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
