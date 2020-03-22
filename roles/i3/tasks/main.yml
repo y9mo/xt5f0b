@@ -7,8 +7,28 @@
       - i3blocks
       - i3lock
       - i3status
+      - dmenu
     state: present
 
-- name: Install py3status
+- name: Set up xinitrc
+  lineinfile:
+    dest: ~/.xinitrc
+    state: present
+    create: yes
+    insertafter: EOF
+    regexp: "^exec .*"
+    line: "exec i3"
+
+- name: Install polybar
   become: true
-  pacman: name=py3status state=present
+  aur:
+    use: yay
+    name:
+      - polybar
+    skip_installed: yes
+
+- name: Create a polybar config directory if it does not exist
+  file:
+    path: "/home/{{ user.name }}/.config/polybar"
+    state: directory
+    mode: '0755'

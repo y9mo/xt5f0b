@@ -1,3 +1,4 @@
 user:
     name: y9mo
     shell: /usr/bin/zsh
+    dotfiles: https://github.com/y9mo/everydot.git
