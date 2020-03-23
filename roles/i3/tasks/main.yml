@@ -31,17 +31,31 @@
     state: directory
     mode: '0755'
 
-- name: Copy file with owner and permissions
+- name: Copy polybar config file with owner and permissions
   copy:
     src: /usr/share/doc/polybar/config
     dest: "/home/{{ user.name }}/.config/polybar/config"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
 
-- name: Copy file with owner and permissions
+- name: Copy i3 launch file with owner and permissions
   copy:
     src: launch.sh
     dest: "/home/{{ user.name }}/.config/polybar/launch.sh"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: '0755'
+
+- name: Copy i3 config file with owner and permissions
+  copy:
+    src: /etc/i3/config
+    dest: "/home/{{ user.name }}/.config/i3/config"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Add polybar exec line at end of i3 config file
+  lineinfile:
+    path: "/home/{{ user.name }}/.config/i3/config"
+    line: "exec_always --no-startup-id /home/{{ user.name }}/.config/polybar/launch.sh"
+    state: present
+    insertafter: EOF
