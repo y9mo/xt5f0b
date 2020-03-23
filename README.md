@@ -1,17 +1,14 @@
 # xt5f0b
 
-Install Ansible as it is the only requirement that is not pre-installed
-```shell script
-$ sudo pacman -Sy ansible
-```
+## Archlinux Install
 
 ```shell script
-$ curl -LJO https://github.com/y9mo/xt5f0b/archive/master.zip
+$ curl -sSf https://raw.githubusercontent.com/y9mo/xt5f0b/master/setup_xps.sh | sh
 ```
 
 ## Ansible Arch configuration playbook
 
-First Log in as newly created user and execute the playbook
+First Log in as newly created user and then execute the playbook
 ```shell script
 $ ansible-playbook --ask-become-pass playbook.yml
 ```
