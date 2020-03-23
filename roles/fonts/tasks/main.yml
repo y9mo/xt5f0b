@@ -4,6 +4,7 @@
   pacman:
     name:
       - noto-fonts
+      - noto-fonts-emoji
       - terminus-font
       - ttf-dejavu
       - ttf-droid

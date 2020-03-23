@@ -6,7 +6,7 @@
       - i3-wm
       - i3blocks
       - i3lock
-      - i3status
+#      - i3status
       - dmenu
     state: present
 
@@ -20,15 +20,30 @@
     line: "exec i3"
 
 - name: Install polybar
-  become: true
   aur:
     use: yay
     name:
       - polybar
+      - ttf-unifont
     skip_installed: yes
 
 - name: Create a polybar config directory if it does not exist
   file:
     path: "/home/{{ user.name }}/.config/polybar"
     state: directory
+    mode: '0755'
+
+- name: Copy file with owner and permissions
+  copy:
+    src: /usr/share/doc/polybar/config
+    dest: "/home/{{ user.name }}/.config/polybar/config"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Copy file with owner and permissions
+  copy:
+    src: launch.sh
+    dest: "/home/{{ user.name }}/.config/polybar/launch.sh"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
     mode: '0755'
