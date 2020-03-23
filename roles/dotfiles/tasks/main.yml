@@ -3,6 +3,7 @@
 #    name:
 #      - git
 #      - go
+#      - neovim
 #      - sudo
 #      - zsh
 #      - yarn
