@@ -47,7 +47,7 @@ mount $EFIPARTITION /mnt/boot
 
 
 # Install essential packages and then some
-pacstrap /mnt base base-devel linux linux-firmware neovim git openssh sudo efibootmgr intel-ucode lvm2 networkmanager ansible
+pacstrap /mnt base base-devel linux linux-firmware neovim git openssh sudo efibootmgr intel-ucode lvm2 networkmanager zsh ansible
 
 #
 # Configure the system
