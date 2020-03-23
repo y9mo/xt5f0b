@@ -32,7 +32,7 @@ vgcreate vg0 /dev/mapper/luks
 
 # Create all your logical volumes on the volume group
 lvcreate -L 1G vg0 -n swap
-lvcreate -L 4G vg0 -n root
+lvcreate -L 10G vg0 -n root
 lvcreate -l 100%FREE vg0 -n home
 
 # Format your filesystems on each logical volume
