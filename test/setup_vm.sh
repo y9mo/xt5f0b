@@ -1,4 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
+# WARNING: this script will destroy data on the selected disk.
+# This script can be run by executing the following:
+#   curl -sL https://git.io/vAoV8 | bash
+set -uo pipefail
 
 # Fetching and ranking a live mirror list for France
 curl -s "https://www.archlinux.org/mirrorlist/?country=FR&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' > /etc/pacman.d/mirrorlist
