@@ -4,15 +4,13 @@
 
   roles:
     - base
-    - docker
+    - dev
     - dotfiles
     - fonts
     - fstrim
-    - golang
     - graphical
     - hashicorp
     - i3
     - lightdm
     - networkmanager
-    - rust
     - yay
