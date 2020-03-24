@@ -47,4 +47,4 @@
     force: yes
 
 - name: Install vim plugins
-  command: nvim --headless +PluginInstall +qa
+  command: nvim --headless +PlugInstall +qa
