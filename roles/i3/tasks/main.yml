@@ -25,11 +25,15 @@
       - ttf-unifont
     skip_installed: yes
 
-- name: Create a polybar config directory if it does not exist
+- name: Create polybar/i3 config directory if it does not exist
   file:
-    path: "/home/{{ user.name }}/.config/polybar"
+    path: "{{ item }}"
     state: directory
     mode: '0755'
+  with_items: [
+    "/home/{{ user.name }}/.config/i3",
+    "/home/{{ user.name }}/.config/polybar"
+  ]
 
 - name: Copy polybar config file with owner and permissions
   copy:
