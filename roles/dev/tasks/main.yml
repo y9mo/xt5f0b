@@ -1,17 +1,15 @@
 ---
-- name: Install golang
+- name: Install go nodejs docker
   become: true
   pacman:
-    name: go
+    name:
+      - docker
+      - go
+      - nodejs
+    state: present
 
 - name: Install rust by rustup
   shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
-- name: Install docker
-  become: true
-  pacman:
-    name: docker
-    state: present
 
 - name: Enable and start docker service
   become: true
