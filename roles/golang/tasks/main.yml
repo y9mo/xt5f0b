@@ -1,5 +1,0 @@
----
-- name: Install golang
-  become: true
-  pacman:
-    name: go
