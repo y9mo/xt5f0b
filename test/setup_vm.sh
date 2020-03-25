@@ -4,6 +4,9 @@
 #   curl -sL https://git.io/vAoV8 | bash
 set -uo pipefail
 
+# Update the system clock
+timedatectl set-ntp true
+
 # Fetching and ranking a live mirror list for France
 curl -s "https://www.archlinux.org/mirrorlist/?country=FR&protocol=https&use_mirror_status=on" | sed -e 's/^#Server/Server/' > /etc/pacman.d/mirrorlist
 
