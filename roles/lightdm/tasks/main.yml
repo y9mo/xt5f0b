@@ -7,13 +7,35 @@
       - lightdm-gtk-greeter
     state: present
 
-- name: Set up greeter
+- name: Push LightDM greeter background
+  become: true
+  copy:
+    src: backgrounds
+    dest: /usr/share
+
+- name: Set up LightDM greeter
   become: true
   lineinfile:
     dest: /etc/lightdm/lightdm.conf
     state: present
     regexp: '^#greeter-session='
     line: 'greeter-session=lightdm-gtk-greeter'
+
+- name: Set LightDM greeter background
+  become: true
+  lineinfile:
+    dest: /etc/lightdm/lightdm-gtk-greeter.conf
+    regexp: "^background="
+    state: present
+    line: "background=/usr/share/backgrounds/dizorb_beam_me_up_scotty.jpg"
+
+- name: Set LightDM greeter theme
+  become: true
+  lineinfile:
+    dest: /usr/share/xgreeters/lightdm-gtk-greeter.desktop
+    state: present
+    regexp: "^Exec="
+    line: "Exec=env GTK_THEME=Adwaita:dark lightdm-gtk-greeter"
 
 - name: Enable LightDM
   become: true
