@@ -11,6 +11,6 @@
     - graphical
     - hashicorp
     - i3
-    - lightdm
     - networkmanager
+    - sddm
     - yay
