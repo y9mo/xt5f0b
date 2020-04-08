@@ -6,3 +6,15 @@
       - xorg-server
       - xorg-xinit
       - xorg-xrdb
+      - xterm
+      state: present
+
+  - name: Install xdg-user-dirs tool
+    become: true
+    pacman:
+      name:
+        - xdg-user-dirs
+      state: present
+
+  - name: Creating user's default directories
+    shell: xdg-user-dirs-update
