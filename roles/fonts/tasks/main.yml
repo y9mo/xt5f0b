@@ -10,7 +10,10 @@
       - ttf-droid
       - ttf-font-awesome
       - ttf-freefont
+      - ttf-hack
       - ttf-inconsolata
       - ttf-liberation
       - ttf-roboto
+      - ttf-roboto-mono
       - ttf-ubuntu-font-family
+    state: present
