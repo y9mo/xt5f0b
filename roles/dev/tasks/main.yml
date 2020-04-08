@@ -1,11 +1,13 @@
 ---
-- name: Install go nodejs docker
+- name: Install docker go nodejs npm yarn
   become: true
   pacman:
     name:
       - docker
       - go
       - nodejs
+      - npm
+      - yarn
     state: present
 
 - name: Install rust by rustup
