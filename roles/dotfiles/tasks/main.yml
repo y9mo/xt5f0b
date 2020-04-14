@@ -30,6 +30,16 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
 
+- name: Create symlink to Xresources
+  file:
+    src: "/home/{{ user.name }}/.config/.Xresources"
+    dest: "/home/{{ user.name }}/.Xresources"
+    state: link
+    force: yes
+    follow: false
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
 - name: Create nvim autoload and plugged in config directory
   file:
     path: "{{ item }}"
