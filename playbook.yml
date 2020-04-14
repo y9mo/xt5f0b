@@ -8,9 +8,7 @@
     - dotfiles
     - fonts
     - fstrim
-    - graphical
+    - gui
     - hashicorp
-    - i3
     - networkmanager
-    - sddm
     - yay

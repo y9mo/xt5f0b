@@ -1,0 +1,100 @@
+---
+- name: Install Xorg base
+  become: true
+  pacman:
+    name:
+    - xorg-server
+    - xorg-xinit
+    - xorg-xrdb
+    - rxvt-unicode
+    state: present
+
+- name: Install xdg-user-dirs tool
+  become: true
+  pacman:
+    name:
+      - xdg-user-dirs
+    state: present
+
+- name: Creating user's default directories
+  shell: xdg-user-dirs-update
+
+- name: Install i3
+  become: true
+  pacman:
+    name:
+      - i3-wm
+      - i3lock
+      - dmenu
+    state: present
+
+- name: Install polybar
+  aur:
+    use: yay
+    name:
+      - polybar
+      - ttf-unifont
+    skip_installed: yes
+
+- name: Create polybar/i3 config directory if it does not exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items: [
+    "/home/{{ user.name }}/.config/i3",
+    "/home/{{ user.name }}/.config/polybar"
+  ]
+
+- name: Copy polybar config file with owner and permissions
+  copy:
+    src: /usr/share/doc/polybar/config
+    dest: "/home/{{ user.name }}/.config/polybar/config"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Launch feh to set wallpaper
+  lineinfile:
+    path: "/home/{{ user.name }}/.config/i3/config"
+    line: "exec --no-startup-id feh --bg-scale /home/{{ user.name }}/Pictures/backgrounds/{{ user.wallpaper }}"
+
+- name: Install SDDM
+  become: true
+  pacman:
+    name:
+      - sddm
+      - qt5-svg
+    state: present
+
+- name: Install SDDM Theme
+  aur:
+    use: yay
+    name:
+      - chili-sddm-theme
+    skip_installed: yes
+
+- name: Specify SDDM greeter theme
+  become: true
+  lineinfile:
+    path: /etc/sddm.conf.d/sddm.conf
+    regexp: "^Current="
+    line: "[Theme]\nCurrent=chili"
+    state: present
+    create: yes
+
+- name: Set user profile pic
+  become: true
+  copy:
+    src: icon/mask.png
+    dest: /usr/share/sddm/faces/{{ user.name }}.face.icon
+
+- name: Copy background
+  copy:
+    src: backgrounds
+    dest: /home/{{ user.name }}/Pictures
+
+- name: Enable SDDM
+  become: true
+  service:
+    name: sddm.service
+    enabled: yes
