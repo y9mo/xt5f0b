@@ -12,5 +12,6 @@
       - man-db
       - man-pages
       - ranger
+      - ripgrep
       - ruby
     state: present
