@@ -3,7 +3,6 @@
   become: true
   pacman:
     name:
-      - aws-cli
       - bc
       - evince
       - git
@@ -12,6 +11,4 @@
       - man-db
       - man-pages
       - ranger
-      - ripgrep
-      - ruby
     state: present

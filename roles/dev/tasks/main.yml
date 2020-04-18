@@ -1,13 +1,18 @@
 ---
-- name: Install docker go nodejs npm yarn
+- name: Install awscli docker go nodejs npm packer ripgrep ruby yarn terraform
   become: true
   pacman:
     name:
+      - aws-cli
       - docker
       - go
       - nodejs
       - npm
+      - packer
+      - ripgrep
+      - ruby
       - yarn
+      - terraform
     state: present
 
 - name: Install rust by rustup
