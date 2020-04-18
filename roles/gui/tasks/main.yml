@@ -51,17 +51,15 @@
     "/home/{{ user.name }}/.config/polybar"
   ]
 
-- name: Copy polybar config file with owner and permissions
-  copy:
-    src: /usr/share/doc/polybar/config
-    dest: "/home/{{ user.name }}/.config/polybar/config"
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
-
-- name: Launch feh to set wallpaper
+- name: Launch feh to set wallpaper in i3-wm
   lineinfile:
     path: "/home/{{ user.name }}/.config/i3/config"
     line: "\nexec --no-startup-id feh --bg-scale /home/{{ user.name }}/Pictures/backgrounds/{{ user.wallpaper }}"
+
+- name: Launch polybar in i3-wm
+  lineinfile:
+    path: "/home/{{ user.name }}/.config/i3/config"
+    line: "\nexec_always --no-startup-id /home/{{ user.name }}/.config/polybar/launch.sh"
 
 - name: Install SDDM
   become: true
