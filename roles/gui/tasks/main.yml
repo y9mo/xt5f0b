@@ -34,6 +34,9 @@
   aur:
     use: yay
     name:
+      - nerd-fonts-inconsolata
+      - nerd-fonts-noto
+      - nerd-fonts-source-code-pro
       - polybar
       - ttf-unifont
     skip_installed: yes
@@ -100,3 +103,9 @@
   service:
     name: sddm.service
     enabled: yes
+
+- name: Perl extension keyboad-select for the rxvt-unicode terminal emulator
+  become: true
+  get_url:
+    url: https://raw.githubusercontent.com/muennich/urxvt-perls/master/keyboard-select
+    dest: "/usr/lib/urxvt/perl/keyboard-select"
