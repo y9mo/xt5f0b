@@ -5,6 +5,7 @@
     name:
     - xorg-server
     - xorg-xinit
+    - xorg-xrandr
     - xorg-xrdb
     - rxvt-unicode
     - xclip
