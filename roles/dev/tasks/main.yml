@@ -15,8 +15,32 @@
       - terraform
     state: present
 
-- name: Install rust by rustup
-  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+- name: Check rust for existing install
+  stat:
+    path: '/home/{{ user.name }}/.rustup'
+  changed_when: false
+  register: rustup_home
+
+- when: not rustup_home.stat.exists
+  block:
+    - name: Download https://sh.rustup.rs
+      become: true
+      get_url:
+        url: https://sh.rustup.rs
+        dest: /tmp/rustup.sh
+        mode: 755
+
+    - name: Install rust with rustup
+      become: true
+      command: /tmp/rustup.sh -y
+      args:
+        creates: '/home/{{ user.name }}/.rustup'
+  always:
+    - name: Cleanup rustup
+      become: true
+      file:
+        path: /tmp/rustup.sh
+        state: absent
 
 - name: Enable and start docker service
   become: true

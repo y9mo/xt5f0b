@@ -18,8 +18,16 @@
       - xdg-user-dirs
     state: present
 
-- name: Creating user's default directories
-  shell: xdg-user-dirs-update
+- name: Check user default dir exists
+  stat:
+    path: '/home/{{ user.name }}/Downloads'
+  changed_when: false
+  register: downloads_home
+
+- when: not downloads_home.stat.exists
+  block:
+    - name: Creating user's default directories
+      command: xdg-user-dirs-update
 
 - name: Install i3
   become: true
@@ -29,6 +37,7 @@
       - i3lock
       - dmenu
       - feh
+      - bind-tools
     state: present
 
 - name: Install polybar
@@ -39,6 +48,8 @@
       - nerd-fonts-noto
       - nerd-fonts-source-code-pro
       - polybar
+      - tamzen-font-git
+      - nerd-fonts-iosevka
       - ttf-unifont
     skip_installed: yes
 

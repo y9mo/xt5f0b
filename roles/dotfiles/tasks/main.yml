@@ -56,5 +56,12 @@
     dest: "/home/{{ user.name }}/.config/nvim/autoload/plug.vim"
     force: yes
 
-- name: Install vim plugins
-  command: nvim --headless +PlugInstall +qa
+- name: Check if plugin folder is empty before proceeding
+  find:
+    paths: "/home/{{ user.name }}/.config/nvim/plugged"
+  register: plugin_not_found
+
+- when: plugin_not_found
+  block:
+   - name: Install vim plugins
+     command: nvim --headless +PlugInstall +qa
