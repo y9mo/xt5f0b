@@ -3,3 +3,5 @@ user:
     shell: /usr/bin/zsh
     dotfiles: https://github.com/y9mo/everydot.git
     wallpaper: dizorb_distant.jpg
+
+destdir: /tmp/yay
