@@ -1,0 +1,33 @@
+---
+- name: Clone "{{ libname }}"
+  become: yes
+  become_user: y9mo
+  git:
+    repo: https://github.com/libimobiledevice/{{ libname }}.git
+    dest: "/tmp/{{ libname }}"
+
+- name: Autogen step for "{{ libname }}" build
+  become: yes
+  become_user: y9mo
+  shell: ./autogen.sh
+  args:
+    chdir: "/tmp/{{ libname }}"
+
+- name: Build "{{ libname }}"
+  become: yes
+  become_user: y9mo
+  shell: make
+  args:
+    chdir: "/tmp/{{ libname }}"
+
+- name: Install "{{ libname }}"
+  become: yes
+  shell: make install
+  args:
+    chdir: "/tmp/{{ libname }}"
+
+- name: Cleanup "{{ libname }}"
+  become: yes
+  file:
+    path: "/tmp/{{ libname }}"
+    state: absent
