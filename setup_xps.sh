@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# WARNING: this script will destroy data on the selected disk.
+set -uo pipefail
 
 # Update the system clock
 timedatectl set-ntp true
@@ -10,7 +12,7 @@ DRIVE=/dev/nvme0n1
 EFIPARTITION=/dev/nvme0n1p1
 ENCPARTITION=/dev/nvme0n1p2
 
-USER_SETUP_URL=https://raw.githubusercontent.com/y9mo/xt5f0b/master/setup_user.yml
+SETUP_URL=https://github.com/y9mo/xt5f0b/archive/master.tar.gz
 
 sgdisk --zap-all $DRIVE
 
@@ -50,7 +52,7 @@ mount $EFIPARTITION /mnt/boot
 
 
 # Install essential packages and then some
-pacstrap /mnt base base-devel linux linux-firmware neovim git openssh sudo efibootmgr intel-ucode lvm2 networkmanager zsh ansible
+pacstrap /mnt base base-devel linux linux-firmware neovim git openssh sudo efibootmgr intel-ucode lvm2 networkmanager zsh ansible wget
 
 #
 # Configure the system
@@ -129,7 +131,7 @@ EOF
 
 
 arch-chroot /mnt /bin/bash <<EOF
-curl -LJO $USER_SETUP_URL
+wget -q -O - $SETUP_URL | tar --transform 's/^dbt2-0.37.50.3/dbt2/' -xz ; cd xt5f0b-master;
 ansible-playbook setup_user.yml
 EOF
 
