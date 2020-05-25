@@ -2,16 +2,8 @@
 
 ## Archlinux Install
 
-Increase font size
-
 ```shell script
-$ setfont latarcyrheb-sun32
-```
-
-Retrieve and execute install script
-
-```shell script
-$ curl -sSf https://raw.githubusercontent.com/y9mo/xt5f0b/master/setup_xps.sh | sh
+$ ./installer
 ```
 
 ## Ansible Arch configuration playbook
@@ -35,6 +27,12 @@ $ diskutil unmountDisk /dev/diskX
 
 # USB flash installation media
 $ dd if=path/to/arch.iso of=/dev/rdiskX bs=1m
+```
+
+#### Increase font size
+
+```shell script
+$ setfont latarcyrheb-sun32
 ```
 
 #### Issue with Archlinux vagrant box
