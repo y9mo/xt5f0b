@@ -40,6 +40,16 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
 
+- name: Create symlink to tmux conf
+  file:
+    src: "/home/{{ user.name }}/.config/tmux/tmux.conf"
+    dest: "/home/{{ user.name }}/.tmux.conf"
+    state: link
+    force: yes
+    follow: false
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
 - name: Create nvim autoload and plugged in config directory
   file:
     path: "{{ item }}"
