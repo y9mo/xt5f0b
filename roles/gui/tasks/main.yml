@@ -111,3 +111,14 @@
   get_url:
     url: https://raw.githubusercontent.com/muennich/urxvt-perls/master/keyboard-select
     dest: "/usr/lib/urxvt/perl/keyboard-select"
+
+- name: Install firefox chromium hunspell
+  become: true
+  pacman:
+    name:
+      - firefox-developer-edition
+      - chromium
+      - hunspell
+      - hunspell-en_US
+      - hunspell-fr
+    state: present
