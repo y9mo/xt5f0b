@@ -30,16 +30,6 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
 
-- name: Create symlink to Xresources
-  file:
-    src: "/home/{{ user.name }}/.config/.Xresources"
-    dest: "/home/{{ user.name }}/.Xresources"
-    state: link
-    force: yes
-    follow: false
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
-
 - name: Create symlink to tmux conf
   file:
     src: "/home/{{ user.name }}/.config/tmux/tmux.conf"
@@ -75,3 +65,24 @@
   block:
    - name: Install vim plugins
      command: nvim --headless +PlugInstall +qa
+
+- name: Install TPM for tmux
+  shell: type tmux
+  register: command_result
+  failed_when: command_result.rc > 1
+
+- when: command_result.rc != 0
+  block:
+    - name: Create tmux plugins directory
+      file:
+        path: "/home/{{ user.name }}/.config/tmux/plugins"
+        state: directory
+        mode: '0755'
+
+    - name: Clone Tmux Plugin Manager
+      git:
+        repo: "https://github.com/tmux-plugins/tpm"
+        dest: "/home/{{ user.name }}/.config/tmux/plugins/tpm"
+
+    - name: Install Tmux plugins
+      command: "/home/{{ user.name }}/.config/tmux/plugins/tpm/bin/install_plugins"
