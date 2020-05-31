@@ -1,10 +1,13 @@
 ---
-- name: Install awscli docker go nodejs npm packer ripgrep ruby yarn terraform
+- name: Install awscli bat docker fd fzf go nodejs npm packer rg ruby yarn terraform
   become: true
   pacman:
     name:
       - aws-cli
+      - bat
       - docker
+      - fd
+      - fzf
       - go
       - nodejs
       - npm
