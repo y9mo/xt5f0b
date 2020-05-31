@@ -7,8 +7,7 @@
     - xorg-xinit
     - xorg-xrandr
     - xorg-xrdb
-    - rxvt-unicode
-    - xclip
+    - alacritty
     state: present
 
 - name: Install xdg-user-dirs tool
@@ -105,12 +104,6 @@
   service:
     name: sddm.service
     enabled: yes
-
-- name: Perl extension keyboad-select for the rxvt-unicode terminal emulator
-  become: true
-  get_url:
-    url: https://raw.githubusercontent.com/muennich/urxvt-perls/master/keyboard-select
-    dest: "/usr/lib/urxvt/perl/keyboard-select"
 
 - name: Install firefox chromium hunspell
   become: true
