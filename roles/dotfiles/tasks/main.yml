@@ -85,4 +85,4 @@
         dest: "/home/{{ user.name }}/.config/tmux/plugins/tpm"
 
     - name: Install Tmux plugins
-      command: "/home/{{ user.name }}/.config/tmux/plugins/tpm/bin/install_plugins"
+      shell: "tmux new-session -d \"sleep 1\"; sleep 0.1; /home/{{ user.name }}/.config/tmux/plugins/tpm/bin/install_plugins"
