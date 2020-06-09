@@ -71,7 +71,7 @@
   register: command_result
   failed_when: command_result.rc > 1
 
-- when: command_result.rc != 0
+- when: command_result.rc == 0
   block:
     - name: Create tmux plugins directory
       file:
