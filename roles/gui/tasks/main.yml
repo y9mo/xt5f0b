@@ -7,7 +7,6 @@
     - xorg-xinit
     - xorg-xrandr
     - xorg-xrdb
-    - alacritty
     state: present
 
 - name: Install xdg-user-dirs tool
@@ -38,7 +37,6 @@
       - i3-wm
       - i3lock
       - rofi
-      - tmux
     state: present
 
 - name: Install polybar

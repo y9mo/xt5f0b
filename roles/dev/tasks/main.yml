@@ -3,6 +3,7 @@
   become: true
   pacman:
     name:
+      - alacritty
       - aws-cli
       - bat
       - docker
@@ -16,6 +17,7 @@
       - ruby
       - yarn
       - terraform
+      - tmux
     state: present
 
 - name: Check rust for existing install
