@@ -60,21 +60,3 @@
         recurse: yes
         owner: "{{ user.name }}"
         group: "{{ user.name }}"
-
-    - include_tasks: install_ioslibs.yml
-      args:
-        apply:
-          environment:
-            PKG_CONFIG_PATH: /usr/local/lib/pkgconfig
-      loop:
-        - libplist
-        - libusbmuxd
-        - libimobiledevice
-      loop_control:
-        loop_var: libname
-
-    - name: Create iOS tethering configuration file
-      lineinfile:
-        path: /etc/systemd/network/30-tethering.network
-        line: '[Match]\nName=enp0s26u1u2c4i2\n\n[Network]\nDHCP=yes'
-        create: yes
