@@ -84,7 +84,7 @@ echo 'xtbf' > /mnt/etc/hostname
 
 echo '127.0.0.1 localhost
 ::1 localhost
-127.0.1.1   xtbf.localdomain   xtbf' >> /mnt/etc/hosts
+127.0.1.1   xtbf.localdomain   xtbf' > /mnt/etc/hosts
 
 
 #
@@ -101,7 +101,8 @@ NEW_HOOKS=$(
     sed --silent 's/^HOOKS=(\([^)]\+\))/\1/p' /mnt/etc/mkinitcpio.conf \
         | tr ' ' '\n' \
         | sed 's/^\(block\)$/keyboard\nkeymap\n\1/;s/^\(filesystems\)$/encrypt\nlvm2\nresume\n\1/;/^\(keyboard\|keymap\|encrypt\|lvm2\|resume\)$/d' \
-        | tr '\n' ' '
+        | tr '\n' ' ' \
+        | sed 's/ *$//g'
 )
 # Replace old HOOKS
 sed --in-place 's/^\(HOOKS=(\)[^)]\+/\1'"$NEW_HOOKS"'/' /mnt/etc/mkinitcpio.conf
@@ -116,7 +117,7 @@ EOF
 
 echo default arch\ntimeout 5 >> /mnt/boot/loader/loader.conf
 
-CRYPTDEVICE_UUID=$(blkid | grep $ENCPARTITION | cut -d '"' -f 2)
+CRYPTDEVICE_UUID=$(blkid -s UUID -o value $ENCPARTITION)
 
 echo 'title Arch Linux
 linux /vmlinuz-linux
@@ -131,7 +132,7 @@ EOF
 
 
 arch-chroot /mnt /bin/bash <<EOF
-wget -q -O - $SETUP_URL | tar --transform 's/^dbt2-0.37.50.3/dbt2/' -xz ; cd xt5f0b-master;
+wget -q -O - $SETUP_URL | tar -xz ; cd xt5f0b-master;
 ansible-playbook setup_user.yml
 EOF
 
