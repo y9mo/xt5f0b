@@ -6,6 +6,7 @@
       - networkmanager
       - networkmanager-openconnect
       - gnome-keyring
+      - network-manager-applet
     state: present
 
 - name: Enable and start NetworkManager
