@@ -3,6 +3,7 @@
   become: true
   pacman:
     name:
+      - adobe-source-code-pro-fonts
       - noto-fonts
       - noto-fonts-emoji
       - terminus-font
