@@ -36,6 +36,7 @@
       - feh
       - i3-wm
       - i3lock
+      - i3status
       - rofi
     state: present
 
