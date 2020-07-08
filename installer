@@ -123,7 +123,7 @@ echo 'title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options cryptdevice=UUID='"$CRYPTDEVICE_UUID"':vg0 root=/dev/mapper/vg0-root resume=/dev/mapper/vg0-swap rw intel_pstate=no_hwp' >> /mnt/boot/loader/entries/arch.conf
+options cryptdevice=UUID='"$CRYPTDEVICE_UUID"':vg0:allow-discards root=/dev/mapper/vg0-root resume=/dev/mapper/vg0-swap rw intel_pstate=no_hwp' >> /mnt/boot/loader/entries/arch.conf
 
 
 arch-chroot /mnt /bin/bash <<EOF
