@@ -39,14 +39,13 @@
       - rofi
     state: present
 
-- name: Install polybar
+- name: Install fonts with yay
   aur:
     use: yay
     name:
       - nerd-fonts-inconsolata
       - nerd-fonts-noto
       - nerd-fonts-source-code-pro
-      - polybar
       - tamzen-font-git
       - nerd-fonts-iosevka
       - ttf-unifont
@@ -58,8 +57,7 @@
     state: directory
     mode: '0755'
   with_items: [
-    "/home/{{ user.name }}/.config/i3",
-    "/home/{{ user.name }}/.config/polybar"
+    "/home/{{ user.name }}/.config/i3"
   ]
 
 - name: Install SDDM
