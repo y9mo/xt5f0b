@@ -40,6 +40,26 @@
       - rofi
     state: present
 
+- name: Install fonts
+  become: true
+  pacman:
+    name:
+      - adobe-source-code-pro-fonts
+      - noto-fonts
+      - noto-fonts-emoji
+      - terminus-font
+      - ttf-dejavu
+      - ttf-droid
+      - ttf-font-awesome
+      - ttf-freefont
+      - ttf-hack
+      - ttf-inconsolata
+      - ttf-liberation
+      - ttf-roboto
+      - ttf-roboto-mono
+      - ttf-ubuntu-font-family
+    state: present
+
 - name: Install fonts with yay
   aur:
     use: yay
@@ -49,6 +69,7 @@
       - nerd-fonts-source-code-pro
       - tamzen-font-git
       - nerd-fonts-iosevka
+      - ttf-fira-code
       - ttf-unifont
     skip_installed: yes
 
