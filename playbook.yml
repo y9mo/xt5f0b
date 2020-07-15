@@ -3,11 +3,11 @@
   name: Configure xps workstation
 
   roles:
-    - base
-    - dev
-    - dotfiles
-    - fonts
-    - fstrim
-    - gui
-    - networkmanager
-    - yay
+    - {role: base, tags: base }
+    - {role: dev, tags: dev }
+    - {role: dotfiles, tags: dotfiles }
+    - {role: fonts, tags: fonts }
+    - {role: fstrim, tags: fstrim }
+    - {role: gui, tags: gui }
+    - {role: networkmanager, tags: networkmanager }
+    - {role: yay, tags: yay }
