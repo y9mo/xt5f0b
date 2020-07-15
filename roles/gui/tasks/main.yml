@@ -112,3 +112,20 @@
       - hunspell-en_US
       - hunspell-fr
     state: present
+
+- name: Install sound bluetooth and stuffs
+  become: true
+  pacman:
+    name:
+      - bluez
+      - bluez-utils
+      - pulseaudio-alsa
+      - pulseaudio-bluetooth
+    state: present
+
+- name: Enable and start bluetooth service
+  become: true
+  systemd:
+    name: bluetooth.service
+    enabled: True
+    state: started
