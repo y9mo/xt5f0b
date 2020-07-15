@@ -25,7 +25,6 @@
 - name: Install starship
   become: true
   command: /tmp/starship_install.sh
-  always:
 
 - name: Cleanup starship installer
   become: true
