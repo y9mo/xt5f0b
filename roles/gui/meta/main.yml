@@ -1,4 +1,4 @@
 ---
 dependencies:
+  - role: dev
   - role: dotfiles
-  - role: yay
