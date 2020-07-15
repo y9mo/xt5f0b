@@ -15,10 +15,23 @@
     dest: "/home/{{ user.name }}/.config"
     force: yes
 
-- name: clone oh-my-zsh
-  git:
-    repo: https://github.com/robbyrussell/oh-my-zsh.git
-    dest: "/home/{{ user.name }}/.oh-my-zsh"
+- name: Download https://starship.rs/install.sh
+  become: true
+  get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/starship_install.sh
+    mode: 755
+
+- name: Install starship
+  become: true
+  command: /tmp/starship_install.sh
+  always:
+
+- name: Cleanup starship installer
+  become: true
+  file:
+    path: /tmp/starship_install.sh
+    state: absent
 
 - name: Create symlink to zshrc
   file:
